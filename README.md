@@ -5,7 +5,7 @@ Results of my first play around rendering images using random sampling:
 
 And my first aesthetic mistake:
 
-![](2020-04-27_overlap.gif)
+![](images/2020-04-27_overlap.png)
 
 ## Credit:
 
