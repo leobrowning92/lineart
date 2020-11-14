@@ -38,7 +38,7 @@ class Octahedron:
 
     def rotate(self, p0, normal, theta):
         self.nodes = rotate(self.nodes, p0, normal, theta)
-        self.edges = self.edges_from_nodes()
+        self.edges = rotate(self.edges, p0, normal, theta)
 
     def sample(self, n, dither):
         line_points = [z_blur_sample_line(*e, n, dither) for e in self.edges]

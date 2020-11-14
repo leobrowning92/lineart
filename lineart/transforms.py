@@ -3,7 +3,7 @@ import numpy as np
 
 def z_blur_sample_line(p1, p2, n, scale):
     points = sample_line(p1, p2, n)
-    add_z_jitter(points, scale=scale)
+    points = add_z_jitter(points, scale=scale)
     return points
 
 
