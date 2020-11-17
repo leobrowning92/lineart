@@ -29,7 +29,7 @@ def add_z_jitter(points: np.array, scale):
     return points
 
 
-def rotate(point, p0, normal, theta):
+def rotation_matrix(theta, normal):
     ux, uy, uz = normal / np.linalg.norm(normal)
     rot_mat = np.array(
         [
@@ -50,6 +50,11 @@ def rotate(point, p0, normal, theta):
             ],
         ]
     )
+    return rot_mat
+
+
+def rotate(point, p0, theta, normal):
+    rot_mat = rotation_matrix(p0, theta, normal)
 
     p0_shifted = point - p0
     rotated = p0_shifted.dot(rot_mat)
@@ -58,5 +63,4 @@ def rotate(point, p0, normal, theta):
 
 
 def rotate_xy(point, p0, theta):
-    back_shifted = rotate(point, p0, [0, 0, 1], theta)
-    return back_shifted
+    return rotate(point, p0, theta, [0, 0, 1])
