@@ -1,5 +1,5 @@
 import numpy as np
-from lineart.transforms import rotate, z_blur_sample_line
+from lineart.transform import rotate_points, z_blur_sample_line
 
 
 class Octahedron:
@@ -37,8 +37,8 @@ class Octahedron:
         return edges
 
     def rotate(self, p0, normal, theta):
-        self.nodes = rotate(self.nodes, p0, normal, theta)
-        self.edges = rotate(self.edges, p0, normal, theta)
+        self.nodes = rotate_points(self.nodes, p0, normal, theta)
+        self.edges = rotate_points(self.edges, p0, normal, theta)
 
     def sample(self, n, dither):
         line_points = [z_blur_sample_line(*e, n, dither) for e in self.edges]

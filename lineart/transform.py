@@ -53,14 +53,18 @@ def rotation_matrix(theta, normal):
     return rot_mat
 
 
-def rotate(point, p0, theta, normal):
-    rot_mat = rotation_matrix(p0, theta, normal)
-
-    p0_shifted = point - p0
-    rotated = p0_shifted.dot(rot_mat)
-    back_shifted = rotated + p0
+def rotate_points(points, centers, theta, normal):
+    rot_mat = rotation_matrix(theta, normal)
+    centers_shifted = points - centers
+    rotated = centers_shifted.dot(rot_mat)
+    back_shifted = rotated + centers
     return back_shifted
 
 
-def rotate_xy(point, p0, theta):
-    return rotate(point, p0, theta, [0, 0, 1])
+def rotate_edges(edges, centers, theta, normal):
+    edge_centers = np.repeat(centers[:, np.newaxis, :], 2, axis=1)
+    return rotate_points(edges, edge_centers, theta, normal)
+
+
+def rotate_points_xy(point, p0, theta):
+    return rotate_points(point, p0, theta, [0, 0, 1])

@@ -31,10 +31,12 @@ def rotating_sampled_octagon(step, total_steps=20):
     return step
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     rotation_steps = 4
 
-    samples = [rotating_sampled_octagon(i, rotation_steps) for i in range(rotation_steps)]
+    samples = [
+        rotating_sampled_octagon(i, rotation_steps) for i in range(rotation_steps)
+    ]
 
     dask.persist(*samples, scheduler="processes")
