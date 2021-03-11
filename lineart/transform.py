@@ -54,9 +54,10 @@ def rotation_matrix(theta, normal):
 
 
 def multi_rot_mat(theta, normal):
-    return np.concatenate([rotation_matrix(th, normal) for th in theta]).reshape(
-        -1, 3, 3
+    rotation_matrices = np.concatenate(
+        [rotation_matrix(th, normal) for th in theta]
     )
+    return rotation_matrices.reshape(-1, 3, 3)
 
 
 def rotate_points(points, centers, theta, normal):

@@ -1,8 +1,9 @@
 import numpy as np
 from lineart.transform import rotate_points, z_blur_sample_line
+from lineart.primatives import EdgeCollection
 
 
-class Octahedron:
+class Octahedron(EdgeCollection):
     def __init__(self, center, radius):
         origin_nodes = np.array(
             [
@@ -14,33 +15,25 @@ class Octahedron:
                 [0, -radius, 0],
             ]
         )
-        self.nodes = origin_nodes + center
-        self.edges = self.edges_from_nodes()
+        super().__init__(self.edges_from_nodes(origin_nodes + center))
 
-    def edges_from_nodes(self):
+    def edges_from_nodes(self, nodes):
         edges = np.array(
             [
-                [self.nodes[0], self.nodes[1]],
-                [self.nodes[0], self.nodes[2]],
-                [self.nodes[0], self.nodes[3]],
-                [self.nodes[0], self.nodes[4]],
-                [self.nodes[5], self.nodes[1]],
-                [self.nodes[5], self.nodes[2]],
-                [self.nodes[5], self.nodes[3]],
-                [self.nodes[5], self.nodes[4]],
-                [self.nodes[1], self.nodes[2]],
-                [self.nodes[2], self.nodes[3]],
-                [self.nodes[3], self.nodes[4]],
-                [self.nodes[4], self.nodes[1]],
+                [nodes[0], nodes[1]],
+                [nodes[0], nodes[2]],
+                [nodes[0], nodes[3]],
+                [nodes[0], nodes[4]],
+                [nodes[5], nodes[1]],
+                [nodes[5], nodes[2]],
+                [nodes[5], nodes[3]],
+                [nodes[5], nodes[4]],
+                [nodes[1], nodes[2]],
+                [nodes[2], nodes[3]],
+                [nodes[3], nodes[4]],
+                [nodes[4], nodes[1]],
             ]
         )
         return edges
 
-    def rotate(self, p0, normal, theta):
-        self.nodes = rotate_points(self.nodes, p0, normal, theta)
-        self.edges = rotate_points(self.edges, p0, normal, theta)
 
-    def sample(self, n, dither):
-        line_points = [z_blur_sample_line(*e, n, dither) for e in self.edges]
-        points = np.concatenate(line_points)
-        return points

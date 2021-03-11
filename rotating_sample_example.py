@@ -2,6 +2,7 @@ import dask
 import numpy as np
 from flat import document, shape, rgba
 from lineart.shapes import Octahedron
+from lineart import draw
 
 
 # Colors and Styles
@@ -21,22 +22,21 @@ def rotating_sampled_octagon(step, total_steps=20):
     page.place(background.rectangle(0, 0, image_size, image_size))
     o = Octahedron(np.array([50, 50, 40]), 40)
 
-    o.rotate([50, 50, 40], [1, 1, 1], np.pi * 2 / total_steps * step)
-    samples = o.sample(1000, 0.02)
-
-    for p in samples:
-        page.place(sandstyle.circle(*p[:2], 0.1))
-    # Display image
-    page.image(kind="rgba", ppi=60).png(f"outputs/{step:03d}.png")
-    return step
+    o.rotate_unison(
+        np.array([[50, 50, 40]]),
+        np.array([1, 1, 1]),
+        np.pi * 2 / total_steps * step
+    )
+    image = draw.draw_zsampled_edges(o.edges, n=1000, scatter=0.01)
+    return image
 
 
 if __name__ == "__main__":
 
-    rotation_steps = 4
+    rotation_steps = 20
 
     samples = [
-        rotating_sampled_octagon(i, rotation_steps) for i in range(rotation_steps)
+        rotating_sampled_octagon(i, rotation_steps).png(f"outputs/{i:03d}.png") for i in range(rotation_steps)
     ]
 
     dask.persist(*samples, scheduler="processes")

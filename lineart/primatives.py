@@ -3,12 +3,13 @@ import numpy as np
 
 
 class EdgeCollection:
-    def __init__(self, edges, velocities, angular_velocities):
+    def __init__(self, edges, velocities=None, angular_velocities=None):
         self.n = edges.shape[0]
         self.edges = edges
+        
+        self.centers = self.edges.sum(axis=1) / 2
         self.velocities = velocities
         self.angular_velocities = angular_velocities
-        self.centers = self.edges.sum(axis=1) / 2
 
     def step(self, t):
         self.edges = self.edges + t * np.repeat(
@@ -34,3 +35,6 @@ class EdgeCollection:
     def rotate_all(self, theta, normal=[0, 0, 1]):
         self.edges = transform.rotate_edges(self.edges, self.centers, theta, normal)
         return self
+
+    def rotate_unison(self, p0, normal, theta):
+        self.edges = transform.rotate_edges(self.edges, p0, theta, normal)
