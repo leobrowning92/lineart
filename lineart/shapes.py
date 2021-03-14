@@ -1,5 +1,4 @@
 import numpy as np
-from lineart.transform import rotate_points, z_blur_sample_line
 from lineart.primatives import EdgeCollection
 
 

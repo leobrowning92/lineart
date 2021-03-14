@@ -1,34 +1,5 @@
 import numpy as np
 
-
-def z_blur_sample_line(p1, p2, n, scale):
-    points = sample_line(p1, p2, n)
-    points = add_z_jitter(points, scale=scale)
-    return points
-
-
-def sample_line(p1, p2, n):
-    vector = p2 - p1
-    r_sample = np.random.rand(n, 1)
-    points = np.multiply(r_sample, vector) + p1
-    return points
-
-
-def add_z_jitter(points: np.array, scale):
-    n = len(points)
-    z_values = points[:, 2]
-    jitter_scalar = np.multiply(scale, z_values)
-
-    jitter = np.multiply(
-        (np.random.randn(n, 2) * 2 - 1),
-        np.stack((jitter_scalar, jitter_scalar), axis=1),
-    )
-    points = points + np.concatenate(
-        (jitter, np.zeros_like(z_values).reshape(-1, 1)), axis=1
-    )
-    return points
-
-
 def rotation_matrix(theta, normal):
     ux, uy, uz = normal / np.linalg.norm(normal)
     rot_mat = np.array(

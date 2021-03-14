@@ -33,8 +33,12 @@ class EdgeCollection:
         return self
 
     def rotate_all(self, theta, normal=[0, 0, 1]):
+        """Rotate all edges about centers by an angle theta
+        """
         self.edges = transform.rotate_edges(self.edges, self.centers, theta, normal)
         return self
 
     def rotate_unison(self, p0, normal, theta):
+        """Rotate all edges about a fixed point
+        """
         self.edges = transform.rotate_edges(self.edges, p0, theta, normal)
