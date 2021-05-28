@@ -42,3 +42,28 @@ class EdgeCollection:
         """Rotate all edges about a fixed point
         """
         self.edges = transform.rotate_edges(self.edges, p0, theta, normal)
+        return self
+
+    def copy(self):
+        return EdgeCollection(
+            self.edges,
+            velocities=self.velocities,
+            angular_velocities=self.angular_velocities
+        )
+
+    def combine(self, other):
+        new_e = np.concatenate((self.edges, other.edges), axis=0)
+        if self.velocities is None or other.velocities is None:
+            new_v = None
+        else:
+            new_v = np.concatenate((self.velocities, other.velocities), axis=0)
+
+        if self.angular_velocities is None or other.angular_velocities is None:
+            new_av = None
+        else:
+            new_av = np.concatenate((self.angular_velocities, other.angular_velocities), axis=0)
+        return EdgeCollection(
+            new_e,
+            velocities=new_v,
+            angular_velocities=new_av
+        )
