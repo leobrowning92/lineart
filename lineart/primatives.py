@@ -1,11 +1,12 @@
 from lineart import transform
 import numpy as np
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class EdgeCollection:
-    def __init__(
-        self, edges, velocities=None, angular_speeds=None, angular_normals=None
-    ):
+    def __init__(self, edges, velocities=None, angular_velocities=None):
         self.n = edges.shape[0]
         self.edges = edges
 
@@ -15,14 +16,11 @@ class EdgeCollection:
             self.velocities = np.zeros(edges[:, 0, :].shape)
         else:
             self.velocities = velocities
-        if angular_speeds is None:
-            self.angular_speeds = np.zeros(edges.shape[0])
+        if angular_velocities is None:
+            # default is very small numbers to avoid zeros for rotation
+            self.angular_velocities = np.ones(edges[:, 0, :].shape) / 1e10
         else:
-            self.angular_speeds = angular_speeds
-        if angular_normals is None:
-            self.angular_normals = np.ones(edges[:, 0, :].shape)
-        else:
-            self.angular_normals = angular_normals
+            self.angular_velocities = angular_velocities
 
     def calc_lengths(self):
         diffs = self.edges[:, 1, :] - self.edges[:, 0, :]
@@ -36,16 +34,18 @@ class EdgeCollection:
         return self
 
     def rotation_step(self, t):
-        rot_mat = transform.multi_rot_mat(self.angular_speeds, self.angular_normals)
-        print(f"{rot_mat.shape=}")
+
+        angle = t * np.linalg.norm(self.angular_velocities, axis=1)
+        rot_mat = transform.multi_rot_mat(angle, self.angular_velocities)
+        logger.debug(f"{rot_mat.shape=}")
         edge_centers = np.repeat(self.centers[:, np.newaxis, :], 2, axis=1)
-        print(f"{edge_centers.shape=}")
+        logger.debug(f"{edge_centers.shape=}")
         centers_shifted = self.edges - edge_centers
-        print(f"{centers_shifted.shape=}")
+        logger.debug(f"{centers_shifted.shape=}")
         rotated = np.matmul(centers_shifted, rot_mat)
-        print(f"{rotated.shape=}")
+        logger.debug(f"{rotated.shape=}")
         back_shifted = rotated + edge_centers
-        print(f"{back_shifted.shape=}")
+        logger.debug(f"{back_shifted.shape=}")
         self.edges = back_shifted
         return self
 

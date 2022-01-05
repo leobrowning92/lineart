@@ -96,20 +96,22 @@ def quick_draw_edges(
     v=False,
     background=style.canvas_fill,
     edge_style=style.blue_edge,
+    page=None,
 ):
-
+    # flat projection onto the xy plane
     edges = edges[:, :, :-1]
-    # page setup
-    d = document(image_size, image_size, "mm")
-    page = d.addpage()
-    page.place(background.rectangle(0, 0, image_size, image_size))
+    if page is None:
+        # page setup
+        d = document(image_size, image_size, "mm")
+        page = d.addpage()
+        page.place(background.rectangle(0, 0, image_size, image_size))
     for e in edges:
         page.place(edge_style.line(*e.flatten()))
     if v:
         for p in edges.reshape(-1, 2):
             page.place(style.debug.circle(*p, 2))
 
-    return page.image(kind="rgba", ppi=60)
+    return page
 
 
 def quick_draw_zsampled_edges(
@@ -120,16 +122,21 @@ def quick_draw_zsampled_edges(
     v=False,
     background=style.canvas_fill,
     point_style=style.blue_sand,
+    page=None,
 ):
 
     image_size = 100
     # page setup
+
     d = document(image_size, image_size, "mm")
-    page = d.addpage()
-    page.place(background.rectangle(0, 0, image_size, image_size))
+    if page is None:
+        # page setup
+        d = document(image_size, image_size, "mm")
+        page = d.addpage()
+        page.place(background.rectangle(0, 0, image_size, image_size))
     line_points = [z_blur_sample_line(*e, n, scatter) for e in edges]
     points = np.concatenate(line_points)
 
     for p in points:
         page.place(point_style.circle(*p[:2], 0.1))
-    return page.image(kind="rgba", ppi=60)
+    return page
