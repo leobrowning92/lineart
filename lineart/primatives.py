@@ -82,6 +82,7 @@ class EdgeCollection:
         info = [
             f"{type(self).__name__} at: object.__repr__(self)",
             f"{self.edges.shape=}",
+            f"{self.centers.mean(axis=0)=}"
             f"self.lengths (min, mean, max) : ({self.lengths.min():0.2f}, {self.lengths.mean():0.2f}, {self.lengths.max():0.2f})",
         ]
         return "\n".join(info)
