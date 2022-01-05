@@ -23,9 +23,7 @@ def rotating_sampled_octagon(step, total_steps=20):
     o = Octahedron(np.array([50, 50, 40]), 40)
 
     o.rotate_unison(
-        np.array([[50, 50, 40]]),
-        np.array([1, 1, 1]),
-        np.pi * 2 / total_steps * step
+        np.array([[50, 50, 40]]), np.array([1, 1, 1]), np.pi * 2 / total_steps * step
     )
     image = draw.draw_zsampled_edges(o.edges, n=1000, scatter=0.01)
     return image
@@ -36,7 +34,8 @@ if __name__ == "__main__":
     rotation_steps = 20
 
     samples = [
-        rotating_sampled_octagon(i, rotation_steps).png(f"outputs/{i:03d}.png") for i in range(rotation_steps)
+        rotating_sampled_octagon(i, rotation_steps).png(f"outputs/{i:03d}.png")
+        for i in range(rotation_steps)
     ]
 
     dask.persist(*samples, scheduler="processes")

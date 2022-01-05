@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def rotation_matrix(theta, normal):
     ux, uy, uz = normal / np.linalg.norm(normal)
     rot_mat = np.array(
@@ -26,7 +27,7 @@ def rotation_matrix(theta, normal):
 
 def multi_rot_mat(theta, normal):
     rotation_matrices = np.concatenate(
-        [rotation_matrix(th, normal) for th in theta]
+        [rotation_matrix(th, nrm) for th, nrm in zip(theta, normal)]
     )
     return rotation_matrices.reshape(-1, 3, 3)
 
@@ -46,3 +47,15 @@ def rotate_edges(edges, centers, theta, normal):
 
 def rotate_points_xy(point, p0, theta):
     return rotate_points(point, p0, theta, [0, 0, 1])
+
+
+def rand_split_edge(e, n):
+    fracs = np.random.rand(n, 1)
+    fracs.sort(axis=0)
+    vector = e[1] - e[0]
+    splits = np.multiply(fracs[::-1], vector) + e[0]
+    points = np.concatenate((e[1].reshape(1, 3), splits, e[0].reshape(1, 3)))
+    starts = points[:-1]
+    ends = points[1:]
+    edges = np.concatenate((starts.reshape(-1, 1, 3), ends.reshape(-1, 1, 3)), axis=1)
+    return edges

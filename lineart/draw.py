@@ -34,32 +34,30 @@ def add_z_jitter(points: np.array, scale):
 
 
 def setup_tiled_page(
-    tile_size=(100, 100),
-    n_cols=1,
-    n_rows=1,
-    background=style.canvas_fill
+    tile_size=(100, 100), n_cols=1, n_rows=1, background=style.canvas_fill
 ):
-    x_dim = tile_size[0]*n_cols
-    y_dim = tile_size[1]*n_rows
+    x_dim = tile_size[0] * n_cols
+    y_dim = tile_size[1] * n_rows
     d = document(x_dim, y_dim, "mm")
-    
+
     page = d.addpage()
-    page.place(background.rectangle(0, 0, x_dim, y_dim,))
+    page.place(
+        background.rectangle(
+            0,
+            0,
+            x_dim,
+            y_dim,
+        )
+    )
     return page
 
 
 def draw_edges_on_tile(
-    edges,
-    col,
-    row,
-    tile_size,
-    page,
-    edge_style=style.blue_edge,
-    v=False
+    edges, col, row, tile_size, page, edge_style=style.blue_edge, v=False
 ):
-    x_origin = col*tile_size
-    y_origin = row*tile_size
-    edges = edges[:, :, :-1]+np.array([x_origin, y_origin])
+    x_origin = col * tile_size
+    y_origin = row * tile_size
+    edges = edges[:, :, :-1] + np.array([x_origin, y_origin])
     for e in edges:
         page.place(edge_style.line(*e.flatten()))
     if v:
@@ -78,12 +76,11 @@ def draw_zsampled_edges_on_tile(
     scatter=0.02,
     sand_size=0.01,
     point_style=style.blue_sand,
-    v=False
-
+    v=False,
 ):
-    x_origin = col*tile_size
-    y_origin = row*tile_size
-    edges = edges + np.array([x_origin, y_origin,0])
+    x_origin = col * tile_size
+    y_origin = row * tile_size
+    edges = edges + np.array([x_origin, y_origin, 0])
     line_points = [z_blur_sample_line(*e, n, scatter) for e in edges]
     points = np.concatenate(line_points)
 
