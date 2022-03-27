@@ -1,4 +1,7 @@
 import numpy as np
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def rotation_matrix(theta, normal):
@@ -59,3 +62,46 @@ def rand_split_edge(e, n):
     ends = points[1:]
     edges = np.concatenate((starts.reshape(-1, 1, 3), ends.reshape(-1, 1, 3)), axis=1)
     return edges
+
+
+def collection_dot(a, b):
+    for v in (a, b):
+        assert len(v.shape) == 2
+        assert a.shape[1] == 3
+    return np.sum(a * b, axis=1)
+
+
+def edge_rot_push(ec, F, pf):
+    cs = ec.centers
+    p0s = ec.edges[:, 0, :]
+    p1s = ec.edges[:, 1, :]
+    dw = 0
+    for ps in [ec.edges[:, 0, :], ec.edges[:, 1, :]]:
+        rs = ps - cs
+        ds = ps - pf
+        dwi = (
+            np.divide(
+                np.cross(rs, ds),
+                (collection_dot(ds, ds) * collection_dot(rs, rs))[:, None],
+            )
+            * F
+        )
+        dw += dwi
+    return dw
+
+
+def edge_vel_push(ec, F, pf):
+    cs = ec.centers
+
+    ds = cs - pf
+    dv = np.divide(ds / np.linalg.norm(ds), collection_dot(ds, ds)[:, None]) * F
+    return dv
+
+
+def point_push(ec, F, pf):
+    dv = edge_vel_push(ec, F, pf)
+    dw = edge_rot_push(ec, F, pf)
+    ec.velocities = ec.velocities + dv
+    ec.angular_velocities = ec.angular_velocities + dw
+    logger.debug(f"{dv=}\n{dw=}")
+    return ec
