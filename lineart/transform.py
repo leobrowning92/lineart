@@ -71,7 +71,7 @@ def collection_dot(a, b):
     return np.sum(a * b, axis=1)
 
 
-def edge_rot_push(ec, F, pf):
+def edge_rot_push(ec, F, pf, scale=1):
     cs = ec.centers
     p0s = ec.edges[:, 0, :]
     p1s = ec.edges[:, 1, :]
@@ -87,20 +87,20 @@ def edge_rot_push(ec, F, pf):
             * F
         )
         dw += dwi
-    return dw
+    return dw*scale
 
 
-def edge_vel_push(ec, F, pf):
+def edge_vel_push(ec, F, pf, scale=1):
     cs = ec.centers
 
     ds = cs - pf
     dv = np.divide(ds / np.linalg.norm(ds), collection_dot(ds, ds)[:, None]) * F
-    return dv
+    return dv*scale
 
 
-def point_push(ec, F, pf):
-    dv = edge_vel_push(ec, F, pf)
-    dw = edge_rot_push(ec, F, pf)
+def point_push(ec, F, pf, lin_scale=1, rot_scale=1):
+    dv = edge_vel_push(ec, F, pf, scale = lin_scale)
+    dw = edge_rot_push(ec, F, pf, scale = rot_scale)
     ec.velocities = ec.velocities + dv
     ec.angular_velocities = ec.angular_velocities + dw
     logger.debug(f"{dv=}\n{dw=}")

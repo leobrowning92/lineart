@@ -10,7 +10,6 @@ class EdgeCollection:
         self.n = edges.shape[0]
         self.edges = edges
 
-        self.centers = self.edges.sum(axis=1) / 2
         self.lengths = self.calc_lengths()
         if velocities is None:
             self.velocities = np.zeros(edges[:, 0, :].shape)
@@ -21,6 +20,10 @@ class EdgeCollection:
             self.angular_velocities = np.ones(edges[:, 0, :].shape) / 1e10
         else:
             self.angular_velocities = angular_velocities
+
+    @property
+    def centers(self):
+        return self.edges.sum(axis=1) / 2
 
     def calc_lengths(self):
         diffs = self.edges[:, 1, :] - self.edges[:, 0, :]
@@ -61,7 +64,7 @@ class EdgeCollection:
 
     def copy(self):
         return EdgeCollection(
-            self.edges, velocities=self.velocities, angular_speeds=self.angular_speeds
+            self.edges, velocities=self.velocities, angular_velocities=self.angular_velocities
         )
 
     def combine(self, other):
@@ -71,11 +74,11 @@ class EdgeCollection:
         else:
             new_v = np.concatenate((self.velocities, other.velocities), axis=0)
 
-        if self.angular_speeds is None or other.angular_speeds is None:
+        if self.angular_velocities is None or other.angular_velocities is None:
             new_av = None
         else:
-            new_av = np.concatenate((self.angular_speeds, other.angular_speeds), axis=0)
-        return EdgeCollection(new_e, velocities=new_v, angular_speeds=new_av)
+            new_av = np.concatenate((self.angular_velocities, other.angular_velocities), axis=0)
+        return EdgeCollection(new_e, velocities=new_v, angular_velocities=new_av)
 
     def __repr__(self):
 

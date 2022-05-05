@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="100mm"
+   height="100mm"
+   viewBox="0 0 100 100"
+   version="1.1"
+   id="svg135"
+   inkscape:version="1.1.2 (b8e25be8, 2022-02-05)"
+   sodipodi:docname="crosshairs.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview137"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.197165"
+     inkscape:cx="165.80839"
+     inkscape:cy="174.99676"
+     inkscape:window-width="1312"
+     inkscape:window-height="847"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs132" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       id="rect161"
+       style="fill:none;stroke:#000000;stroke-width:0.263885"
+       d="M 0,0 H 100 L 99.868057,100 H 0 Z"
+       sodipodi:nodetypes="ccccc" />
+    <g
+       id="g1050">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 50,45 0,10"
+         id="path620"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 45,50 H 55"
+         id="path620-7"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <g
+       id="g1050-6"
+       transform="translate(-35,-35)">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 50,45 V 55"
+         id="path620-2"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 45,50 H 55"
+         id="path620-7-2"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <g
+       id="g1050-5"
+       transform="translate(35,-35)">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 50,45 V 55"
+         id="path620-22"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 45,50 H 55"
+         id="path620-7-7"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <g
+       id="g1050-1"
+       transform="translate(35,35)">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 50,45 V 55"
+         id="path620-5"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 45,50 H 55"
+         id="path620-7-21"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <g
+       id="g1050-10"
+       transform="translate(-35,35)">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 50,45 V 55"
+         id="path620-1"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 45,50 H 55"
+         id="path620-7-8"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <g
+       id="g1050-7-90"
+       transform="matrix(0.97349115,0.97809803,-0.97349115,0.97809803,29.99624,-47.789919)">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 50,45 V 55"
+         id="path620-6-5"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 45,50 H 55"
+         id="path620-7-0-6"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <g
+       id="g1050-7-90-9"
+       transform="matrix(0.97349115,0.97809803,-0.97349115,0.97809803,49.99624,-67.789919)">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 50,45 V 55"
+         id="path620-6-5-1"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 45,50 H 55"
+         id="path620-7-0-6-4"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <g
+       id="g1050-7-90-8"
+       transform="matrix(0.97349115,0.97809803,-0.97349115,0.97809803,69.99624,-47.789919)">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 50,45 V 55"
+         id="path620-6-5-8"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 45,50 H 55"
+         id="path620-7-0-6-7"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <g
+       id="g1050-7-90-1"
+       transform="matrix(0.97349115,0.97809803,-0.97349115,0.97809803,49.99624,-27.789919)">
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 50,45 V 55"
+         id="path620-6-5-9"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="M 45,50 H 55"
+         id="path620-7-0-6-3"
+         sodipodi:nodetypes="cc" />
+    </g>
+  </g>
+</svg>

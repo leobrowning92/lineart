@@ -134,7 +134,7 @@ def quick_draw_zsampled_edges(
     d = document(image_size, image_size, "mm")
     if page is None:
         # page setup
-        make_page(image_size)
+        page = make_page(image_size)
     line_points = [z_blur_sample_line(*e, n, scatter) for e in edges]
     points = np.concatenate(line_points)
 
