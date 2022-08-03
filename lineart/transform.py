@@ -9,19 +9,19 @@ def rotation_matrix(theta, normal):
     rot_mat = np.array(
         [
             [
-                np.cos(theta) + ux ** 2 * (1 - np.cos(theta)),
+                np.cos(theta) + ux**2 * (1 - np.cos(theta)),
                 ux * uy * (1 - np.cos(theta)) - uz * np.sin(theta),
                 ux * uz * (1 - np.cos(theta)) + uy * np.sin(theta),
             ],
             [
                 uy * ux * (1 - np.cos(theta)) + uz * np.sin(theta),
-                np.cos(theta) + uy ** 2 * (1 - np.cos(theta)),
+                np.cos(theta) + uy**2 * (1 - np.cos(theta)),
                 uy * uz * (1 - np.cos(theta)) - ux * np.sin(theta),
             ],
             [
                 uz * ux * (1 - np.cos(theta)) - uy * np.sin(theta),
                 uz * uy * (1 - np.cos(theta)) + ux * np.sin(theta),
-                np.cos(theta) + uz ** 2 * (1 - np.cos(theta)),
+                np.cos(theta) + uz**2 * (1 - np.cos(theta)),
             ],
         ]
     )
@@ -87,7 +87,7 @@ def edge_rot_push(ec, F, pf, scale=1):
             * F
         )
         dw += dwi
-    return dw*scale
+    return dw * scale
 
 
 def edge_vel_push(ec, F, pf, scale=1):
@@ -95,12 +95,12 @@ def edge_vel_push(ec, F, pf, scale=1):
 
     ds = cs - pf
     dv = np.divide(ds / np.linalg.norm(ds), collection_dot(ds, ds)[:, None]) * F
-    return dv*scale
+    return dv * scale
 
 
 def point_push(ec, F, pf, lin_scale=1, rot_scale=1):
-    dv = edge_vel_push(ec, F, pf, scale = lin_scale)
-    dw = edge_rot_push(ec, F, pf, scale = rot_scale)
+    dv = edge_vel_push(ec, F, pf, scale=lin_scale)
+    dw = edge_rot_push(ec, F, pf, scale=rot_scale)
     ec.velocities = ec.velocities + dv
     ec.angular_velocities = ec.angular_velocities + dw
     logger.debug(f"{dv=}\n{dw=}")

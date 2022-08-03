@@ -31,4 +31,3 @@ def octahedron(center, radius):
         ]
     )
     return EdgeCollection(edges)
-

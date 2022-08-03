@@ -1,8 +1,14 @@
 from lineart import style
-from lineart import transform
 from flat import document
+from datetime import datetime
+from flat.document import page
+from itertools import product
+from IPython.display import Image
+from typing import Tuple
 
 import numpy as np
+
+import yaml
 
 
 def z_blur_sample_line(p1, p2, n, scale):
@@ -34,30 +40,33 @@ def add_z_jitter(points: np.array, scale):
 
 
 def setup_tiled_page(
-    tile_size=(100, 100), n_cols=1, n_rows=1, background=style.canvas_fill
-):
-    x_dim = tile_size[0] * n_cols
-    y_dim = tile_size[1] * n_rows
+    tile_size: Tuple[int, int] = (100, 100),
+    n_tiles: Tuple[int, int] = (1, 1),
+    gap: Tuple[int, int] = (0, 0),
+    background=style.canvas_fill,
+) -> page:
+
+    # FUTURE: vectorise this code to use np arrays
+    x_dim = (tile_size[0] + gap[0]) * n_tiles[0] + gap[0]
+    y_dim = (tile_size[1] + gap[1]) * n_tiles[1] + gap[1]
+    dim = (x_dim, y_dim)
+
+    origins = np.empty((*n_tiles, 2))
+    for i, j in product(range(n_tiles[0]), range(n_tiles[1])):
+        origins[i, j] = np.array(
+            [i * (tile_size[0] + gap[0]) + gap[0], j * (tile_size[1] + gap[1]) + gap[1]]
+        )
     d = document(x_dim, y_dim, "mm")
 
     page = d.addpage()
-    page.place(
-        background.rectangle(
-            0,
-            0,
-            x_dim,
-            y_dim,
-        )
-    )
-    return page
+    page.place(background.rectangle(0, 0, *dim))
+    return page, origins
 
 
 def draw_edges_on_tile(
-    edges, col, row, tile_size, page, edge_style=style.blue_edge, v=False
-):
-    x_origin = col * tile_size
-    y_origin = row * tile_size
-    edges = edges[:, :, :-1] + np.array([x_origin, y_origin])
+    edges, col, row, page, origins, edge_style=style.blue_edge, v=False
+) -> page:
+    edges = edges[:, :, :-1] + np.array([*origins[col, row]])
     for e in edges:
         page.place(edge_style.line(*e.flatten()))
     if v:
@@ -77,7 +86,7 @@ def draw_zsampled_edges_on_tile(
     sand_size=0.01,
     point_style=style.blue_sand,
     v=False,
-):
+) -> page:
     x_origin = col * tile_size
     y_origin = row * tile_size
     edges = edges + np.array([x_origin, y_origin, 0])
@@ -89,12 +98,14 @@ def draw_zsampled_edges_on_tile(
 
     return page
 
-def make_page(image_size, background=style.canvas_fill):
+
+def make_page(image_size, background=style.canvas_fill) -> page:
     # page setup
     d = document(image_size, image_size, "mm")
     page = d.addpage()
     page.place(background.rectangle(0, 0, image_size, image_size))
     return page
+
 
 def quick_draw_edges(
     edges,
@@ -103,7 +114,7 @@ def quick_draw_edges(
     background=style.canvas_fill,
     edge_style=style.blue_edge,
     page=None,
-):
+) -> page:
     # flat projection onto the xy plane
     edges = edges[:, :, :-1]
     if page is None:
@@ -126,12 +137,11 @@ def quick_draw_zsampled_edges(
     background=style.canvas_fill,
     point_style=style.blue_sand,
     page=None,
-):
+) -> page:
 
     image_size = 100
     # page setup
 
-    d = document(image_size, image_size, "mm")
     if page is None:
         # page setup
         page = make_page(image_size)
@@ -141,3 +151,19 @@ def quick_draw_zsampled_edges(
     for p in points:
         page.place(point_style.circle(*p[:2], 0.1))
     return page
+
+
+def page_save_iteration(page: page, name: str = "", show=False, thumb=True, **kwargs) -> Image:
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    # path hardcoded to be run from notebooks directory
+    name = "name" if not name else name
+    basename = f"../outputs/{name}_{timestamp}"
+    page.svg(f"{basename}.svg")
+    if kwargs:
+        with open(f"{basename}.yaml", "w") as param_file:
+            yaml.dump(kwargs, param_file)
+    if thumb:
+        page.image(kind="rgba", ppi=60).png(f"{basename}_thumb.png")
+    if show:
+        return Image(page.image(kind="rgba", ppi=60).png())
+    

@@ -29,7 +29,7 @@ class EdgeCollection:
         diffs = self.edges[:, 1, :] - self.edges[:, 0, :]
         return np.linalg.norm(diffs, axis=1)
 
-    def step(self, t):
+    def step(self, t=1):
         self.edges = self.edges + t * np.repeat(
             self.velocities[:, np.newaxis, :], 2, axis=1
         )
@@ -64,7 +64,9 @@ class EdgeCollection:
 
     def copy(self):
         return EdgeCollection(
-            self.edges, velocities=self.velocities, angular_velocities=self.angular_velocities
+            self.edges,
+            velocities=self.velocities,
+            angular_velocities=self.angular_velocities,
         )
 
     def combine(self, other):
@@ -77,7 +79,9 @@ class EdgeCollection:
         if self.angular_velocities is None or other.angular_velocities is None:
             new_av = None
         else:
-            new_av = np.concatenate((self.angular_velocities, other.angular_velocities), axis=0)
+            new_av = np.concatenate(
+                (self.angular_velocities, other.angular_velocities), axis=0
+            )
         return EdgeCollection(new_e, velocities=new_v, angular_velocities=new_av)
 
     def __repr__(self):
