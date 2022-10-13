@@ -52,8 +52,8 @@ def rotate_points_xy(point, p0, theta):
     return rotate_points(point, p0, theta, [0, 0, 1])
 
 
-def rand_split_edge(e, n):
-    fracs = np.random.rand(n, 1)
+def rand_split_edge(e, n_splits):
+    fracs = np.random.rand(n_splits, 1)
     fracs.sort(axis=0)
     vector = e[1] - e[0]
     splits = np.multiply(fracs[::-1], vector) + e[0]
@@ -98,10 +98,10 @@ def edge_vel_push(ec, F, pf, scale=1):
     return dv * scale
 
 
-def point_push(ec, F, pf, lin_scale=1, rot_scale=1):
-    dv = edge_vel_push(ec, F, pf, scale=lin_scale)
-    dw = edge_rot_push(ec, F, pf, scale=rot_scale)
-    ec.velocities = ec.velocities + dv
-    ec.angular_velocities = ec.angular_velocities + dw
+def point_push(edge_collection, force, origin, lin_scale=1, rot_scale=1):
+    dv = edge_vel_push(edge_collection, force, origin, scale=lin_scale)
+    dw = edge_rot_push(edge_collection, force, origin, scale=rot_scale)
+    edge_collection.velocities = edge_collection.velocities + dv
+    edge_collection.angular_velocities = edge_collection.angular_velocities + dw
     logger.debug(f"{dv=}\n{dw=}")
-    return ec
+    return edge_collection

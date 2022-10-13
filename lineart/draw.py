@@ -5,7 +5,7 @@ from flat.document import page
 from itertools import product
 from IPython.display import Image
 from typing import Tuple
-
+from lineart.projection import EDGE_PROJECTIONS
 import numpy as np
 
 import yaml
@@ -50,7 +50,6 @@ def setup_tiled_page(
     x_dim = (tile_size[0] + gap[0]) * n_tiles[0] + gap[0]
     y_dim = (tile_size[1] + gap[1]) * n_tiles[1] + gap[1]
     dim = (x_dim, y_dim)
-
     origins = np.empty((*n_tiles, 2))
     for i, j in product(range(n_tiles[0]), range(n_tiles[1])):
         origins[i, j] = np.array(
@@ -64,13 +63,21 @@ def setup_tiled_page(
 
 
 def draw_edges_on_tile(
-    edges, col, row, page, origins, edge_style=style.blue_edge, v=False
+    edges,
+    col,
+    row,
+    page,
+    origins,
+    edge_style=style.blue_edge,
+    v=False,
+    projection="xy_plane",
 ) -> page:
-    edges = edges[:, :, :-1] + np.array([*origins[col, row]])
-    for e in edges:
+    proj_edges = EDGE_PROJECTIONS[projection](edges)
+    draw_edges = proj_edges + np.array([*origins[col, row]])
+    for e in draw_edges:
         page.place(edge_style.line(*e.flatten()))
     if v:
-        for p in edges.reshape(-1, 2):
+        for p in draw_edges.reshape(-1, 2):
             page.place(style.debug.circle(*p, 2))
     return page
 
@@ -153,17 +160,13 @@ def quick_draw_zsampled_edges(
     return page
 
 
-def page_save_iteration(page: page, name: str = "", show=False, thumb=True, **kwargs) -> Image:
+def page_save_iteration(page: page, name: str = "", show=False, thumb=True) -> Image:
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     # path hardcoded to be run from notebooks directory
     name = "name" if not name else name
     basename = f"../outputs/{name}_{timestamp}"
     page.svg(f"{basename}.svg")
-    if kwargs:
-        with open(f"{basename}.yaml", "w") as param_file:
-            yaml.dump(kwargs, param_file)
     if thumb:
         page.image(kind="rgba", ppi=60).png(f"{basename}_thumb.png")
     if show:
         return Image(page.image(kind="rgba", ppi=60).png())
-    
