@@ -8,8 +8,6 @@ from typing import Tuple
 from lineart.projection import EDGE_PROJECTIONS
 import numpy as np
 
-import yaml
-
 
 def z_blur_sample_line(p1, p2, n, scale):
     points = sample_line(p1, p2, n)
@@ -160,11 +158,13 @@ def quick_draw_zsampled_edges(
     return page
 
 
-def page_save_iteration(page: page, name: str = "", show=False, thumb=True) -> Image:
+def page_save_iteration(
+    page: page, name: str = "", show=False, thumb=True, output_dir="../outputs/"
+) -> Image:
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     # path hardcoded to be run from notebooks directory
     name = "name" if not name else name
-    basename = f"../outputs/{name}_{timestamp}"
+    basename = f"{output_dir}{name}_{timestamp}"
     page.svg(f"{basename}.svg")
     if thumb:
         page.image(kind="rgba", ppi=60).png(f"{basename}_thumb.png")
