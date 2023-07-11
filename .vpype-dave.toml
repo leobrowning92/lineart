@@ -1,0 +1,27 @@
+[gwrite.simple]
+unit = "mm"
+document_start = """M3
+(Header end.)
+G21 (All units in mm)
+G90
+M5
+G90
+M05"""
+layer_start = "(Start Layer)\n"
+line_start = "(Start Block)\n"
+segment_first = """M3S40
+G00 X{x:.4f} Y{y:.4f}
+M03S50
+"""
+segment = """
+G01 X{x:.4f} Y{y:.4f} F2000
+"""
+segment_last = """
+G01 X{x:.4f} Y{y:.4f} F2000 (draw)
+M3S40 (pen up)
+"""
+document_end = """(Footer)
+M3S40
+G00 X0.0000 Y0.0000
+M2"""
+invert_y = true

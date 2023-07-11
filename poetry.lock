@@ -1011,19 +1011,18 @@ win32 = ["pywin32"]
 
 [[package]]
 name = "shapely"
-version = "1.8.5.post1"
-description = "Geometric objects, predicates, and operations"
+version = "2.0.1"
+description = "Manipulation and analysis of geometric objects"
 category = "dev"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 
 [package.dependencies]
-numpy = {version = "*", optional = true, markers = "extra == \"vectorized\""}
+numpy = ">=1.14"
 
 [package.extras]
-all = ["pytest", "pytest-cov", "numpy"]
+docs = ["numpydoc (>=1.1.0,<1.2.0)", "matplotlib", "sphinx", "sphinx-book-theme", "sphinx-remove-toctrees"]
 test = ["pytest", "pytest-cov"]
-vectorized = ["numpy"]
 
 [[package]]
 name = "six"
@@ -1245,7 +1244,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "flake8 
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.11"
-content-hash = "f6bee2f61b9f30e6a94516e327ae730dc9e8f151651595870b02745d240c6cd8"
+content-hash = "39abcd42112a44d36f8a2f256f2b88c134ffc88028bd1c01de6b493d2cc987e9"
 
 [metadata.files]
 appnope = [

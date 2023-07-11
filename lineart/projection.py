@@ -3,6 +3,11 @@ def xy_plane(edges):
     return edges[:, :, :-1]
 
 
+def two_point(edges):
+    proj = edges
+    return proj
+
+
 EDGE_PROJECTIONS = {
     "xy_plane": xy_plane,
 }

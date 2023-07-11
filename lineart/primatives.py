@@ -30,10 +30,12 @@ class EdgeCollection:
         return np.linalg.norm(diffs, axis=1)
 
     def step(self, t=1):
-        self.edges = self.edges + t * np.repeat(
-            self.velocities[:, np.newaxis, :], 2, axis=1
-        )
+        self.edges = transform.move_edges(self.edges, t * self.velocities)
         self.rotation_step(t)
+        return self
+
+    def move(self, v):
+        self.edges = transform.move_edges(self.edges, v)
         return self
 
     def rotation_step(self, t):
@@ -90,6 +92,6 @@ class EdgeCollection:
             f"{type(self).__name__} at: object.__repr__(self)",
             f"{self.edges.shape=}",
             f"{self.centers.mean(axis=0)=}"
-            f"self.lengths (min, mean, max) : ({self.lengths.min():0.2f}, {self.lengths.mean():0.2f}, {self.lengths.max():0.2f})",
+            f"self.lengths (min, mean, max) : ({self.lengths.min():0.2f}, {self.lengths.mean():0.2f}, {self.lengths.max():0.2f})",  # noqa
         ]
         return "\n".join(info)

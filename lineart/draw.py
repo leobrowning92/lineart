@@ -48,6 +48,7 @@ def setup_tiled_page(
     x_dim = (tile_size[0] + gap[0]) * n_tiles[0] + gap[0]
     y_dim = (tile_size[1] + gap[1]) * n_tiles[1] + gap[1]
     dim = (x_dim, y_dim)
+    print(f"{dim=}")
     origins = np.empty((*n_tiles, 2))
     for i, j in product(range(n_tiles[0]), range(n_tiles[1])):
         origins[i, j] = np.array(
@@ -121,9 +122,10 @@ def quick_draw_edges(
     page=None,
 ) -> page:
     # flat projection onto the xy plane
-    edges = edges[:, :, :-1]
+    if edges.shape[-1]==3:
+        edges = edges[:, :, :-1]
     if page is None:
-        page = make_page(image_size)
+        page = make_page(image_size, background)
     for e in edges:
         page.place(edge_style.line(*e.flatten()))
     if v:

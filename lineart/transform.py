@@ -3,6 +3,12 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+# TODO: add a np.array decorator for when all the ins can be converted to np array
+# optionally allow np.array typehinting to convert the inputs as needed
+
+def move_edges(edges, vector):
+    return edges + np.repeat(vector[:, np.newaxis, :], 2, axis=1)
+
 
 def rotation_matrix(theta, normal):
     ux, uy, uz = normal / np.linalg.norm(normal)
@@ -64,6 +70,17 @@ def rand_split_edge(e, n_splits):
     return edges
 
 
+def uniform_split_edge(e, n_splits):
+    fracs = np.linspace(0, 1, n_splits + 2)[1:-1].reshape(-1, 1)
+    vector = e[1] - e[0]
+    splits = np.multiply(fracs[::-1], vector) + e[0]
+    points = np.concatenate((e[1].reshape(1, 3), splits, e[0].reshape(1, 3)))
+    starts = points[:-1]
+    ends = points[1:]
+    edges = np.concatenate((starts.reshape(-1, 1, 3), ends.reshape(-1, 1, 3)), axis=1)
+    return edges
+
+
 def collection_dot(a, b):
     for v in (a, b):
         assert len(v.shape) == 2
@@ -73,8 +90,6 @@ def collection_dot(a, b):
 
 def edge_rot_push(ec, F, pf, scale=1):
     cs = ec.centers
-    p0s = ec.edges[:, 0, :]
-    p1s = ec.edges[:, 1, :]
     dw = 0
     for ps in [ec.edges[:, 0, :], ec.edges[:, 1, :]]:
         rs = ps - cs
