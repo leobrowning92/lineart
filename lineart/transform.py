@@ -6,6 +6,7 @@ logger = logging.getLogger(__name__)
 # TODO: add a np.array decorator for when all the ins can be converted to np array
 # optionally allow np.array typehinting to convert the inputs as needed
 
+
 def move_edges(edges, vector):
     return edges + np.repeat(vector[:, np.newaxis, :], 2, axis=1)
 

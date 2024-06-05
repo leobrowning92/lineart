@@ -86,6 +86,10 @@ class EdgeCollection:
             )
         return EdgeCollection(new_e, velocities=new_v, angular_velocities=new_av)
 
+    def __mult__(self, scalar):
+        self.edges *= scalar
+        return self
+
     def __repr__(self):
 
         info = [

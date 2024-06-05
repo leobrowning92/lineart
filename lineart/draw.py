@@ -7,6 +7,7 @@ from IPython.display import Image
 from typing import Tuple
 from lineart.projection import EDGE_PROJECTIONS
 import numpy as np
+from lineart.primatives import EdgeCollection
 
 
 def z_blur_sample_line(p1, p2, n, scale):
@@ -114,15 +115,18 @@ def make_page(image_size, background=style.canvas_fill) -> page:
 
 
 def quick_draw_edges(
-    edges,
+    edges: EdgeCollection,
     image_size=100,
     v=False,
     background=style.canvas_fill,
     edge_style=style.blue_edge,
     page=None,
+    unit_scale=False,
 ) -> page:
     # flat projection onto the xy plane
-    if edges.shape[-1]==3:
+    if unit_scale:
+        edges = edges * image_size
+    if edges.shape[-1] == 3:
         edges = edges[:, :, :-1]
     if page is None:
         page = make_page(image_size, background)
