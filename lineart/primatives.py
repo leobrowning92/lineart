@@ -1,6 +1,7 @@
 from lineart import transform
 import numpy as np
 import logging
+from lineart.decorators import np_args
 
 logger = logging.getLogger(__name__)
 
@@ -59,7 +60,8 @@ class EdgeCollection:
         self.edges = transform.rotate_edges(self.edges, self.centers, theta, normal)
         return self
 
-    def rotate_unison(self, p0, normal, theta):
+    @np_args
+    def rotate_unison(self, p0: np.ndarray, normal: np.ndarray, theta: float):
         """Rotate all edges about a fixed point"""
         self.edges = transform.rotate_edges(self.edges, p0, theta, normal)
         return self

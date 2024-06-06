@@ -122,6 +122,7 @@ def quick_draw_edges(
     edge_style=style.blue_edge,
     page=None,
     unit_scale=False,
+    camera_angle=0,
 ) -> page:
     # flat projection onto the xy plane
     if unit_scale:
