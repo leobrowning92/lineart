@@ -10,7 +10,7 @@ red = rgba(255, 0, 0, 255)
 
 ## wildflower colors
 wildflower_greens = [
-    rgba(22, 47, 9, 255),
+    rgba(153, 190, 59, 255),
     rgba(113, 157, 54, 255),
     rgba(27, 58, 11, 255),
     rgba(22, 47, 9, 255),
@@ -18,13 +18,13 @@ wildflower_greens = [
 
 
 wildflower_reds = [
-    rgba(22, 47, 9, 255),
+    rgba(224, 56, 84, 255),
     rgba(166, 34, 23, 255),
 ]
 
 
 wildflower_purples = [
-    rgba(166, 34, 23, 255),
+    rgba(176, 130, 235, 255),
     rgba(136, 52, 130, 255),
 ]
 

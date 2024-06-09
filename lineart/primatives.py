@@ -35,7 +35,8 @@ class EdgeCollection:
         self.rotation_step(t)
         return self
 
-    def move(self, v):
+    @np_args
+    def move(self, v: np.ndarray):
         self.edges = transform.move_edges(self.edges, v)
         return self
 
@@ -72,6 +73,13 @@ class EdgeCollection:
             velocities=self.velocities,
             angular_velocities=self.angular_velocities,
         )
+
+    @classmethod
+    def collect(cls, edge_collections):
+        ec = edge_collections[0]
+        for i in range(1, len(edge_collections)):
+            ec = ec.combine(edge_collections[i])
+        return ec
 
     def combine(self, other):
         new_e = np.concatenate((self.edges, other.edges), axis=0)
